@@ -17,15 +17,11 @@ public class Enemy : MonoBehaviour {
 
     public void Hit()
     {
-        if (player.Swing()) { 
+        if (player.Swing() && !player.isDead) { 
             if (Mathf.Abs(player.transform.position.z - transform.position.z) < player.swordRange) {
                 Debug.Log("Enemy hit!");
                 Destroy(gameObject);
             }
-        }
-        else
-        {
-            Debug.Log("too many swings");
         }
        
     }
