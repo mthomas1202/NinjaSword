@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    public GameObject[] models;
     public Player player;
 	// Use this for initialization
 	void Start () {
-		
+        int randomIndex = Random.Range(0, models.Length);
+        for(int i = 0; i < models.Length; i++)
+        {
+            models[i].SetActive(i == randomIndex);
+        }
 	}
 	
 	// Update is called once per frame
@@ -19,7 +24,7 @@ public class Enemy : MonoBehaviour {
     {
         if (player.Swing() && !player.isDead) { 
             if (Mathf.Abs(player.transform.position.z - transform.position.z) < player.swordRange) {
-                Debug.Log("Enemy hit!");
+                player.sword.transform.localPosition = Vector3.Lerp(player.sword.transform.localPosition, player.swordTargetPosition, Time.deltaTime * 5f);
                 Destroy(gameObject);
             }
         }

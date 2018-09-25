@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    public GameObject sword;
     public float speed = 4.5f;
     public float walkingAmplitude = 0.25f;
     public float walkingFrequency = 2f;
@@ -13,10 +14,11 @@ public class Player : MonoBehaviour {
     public bool hasWon = false;
 
     private float coolDownTimer;
-
+    public Vector3 swordTargetPosition;
 	// Use this for initialization
 	void Start () {
-		
+        swordTargetPosition = sword.transform.localPosition;
+        Debug.Log(swordTargetPosition);
 	}
 	
 	// Update is called once per frame
@@ -53,12 +55,14 @@ public class Player : MonoBehaviour {
 
     public bool Swing()
     {
+        bool canSwing = false;
         if(coolDownTimer <= 0f)
         {
             coolDownTimer = swordCooldown;
-            return true;
+            swordTargetPosition = new Vector3(-swordTargetPosition.x, swordTargetPosition.y, swordTargetPosition.z);
+            canSwing = true;
         }
 
-        return false;
+        return canSwing;
     }
 }
